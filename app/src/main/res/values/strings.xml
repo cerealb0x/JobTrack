@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">JobTrack</string>
+
+    <string name="hello_world">Hello world!</string>
+
+    <!--Welcome Screen -->
+    <string name="welcome_message">Welcome</string>
+    <string name= "check_applications">Check Applications</string>
+    <string name= "track_application">Track New Application</string>
+    <string name= "delete_all_applications">Delete All Applications</string>
+
+
+    <string name="action_settings">Settings</string>
+
+    <!--Track New Application Screen -->
+    <string name="title_activity_track_new_application">Track A New Application</string>
+    <string name="company_name">Company Name:</string>
+    <string name="position">Position:</string>
+    <string name="saveButton">Save</string>
+    <string name="deleteButton">Delete</string>
+    <string name="title_activity_check_all_applications">Check All Applications</string>
+    <string name="date_text">Date of Application: </string>
+
+
+
+    <string name="no_applications">You Have No Applications</string>
+    <string name="title_activity_select_month">Select Month</string>
+    <string name="title_activity_edit_application">EditApplication</string>
+
+</resources>
