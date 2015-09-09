@@ -10,6 +10,8 @@ public class Applications {
     private int month;
     private int day;
     private int year;
+    private int interviewStatus;
+    private int offerStatus;
     private String aid;
 
     /*Getter method for position variable*/
@@ -70,6 +72,23 @@ public class Applications {
     /*Setter method for company variable*/
     public void setAid(String aid) {
         this.aid = aid;
+    }
+
+
+    public int getInterviewStatus() {
+        return interviewStatus;
+    }
+
+    public void setInterviewStatus(int interviewStatus) {
+        this.interviewStatus = interviewStatus;
+    }
+
+    public int getOfferStatus() {
+        return offerStatus;
+    }
+
+    public void setOfferStatus(int offerStatus) {
+        this.offerStatus = offerStatus;
     }
 
     /*Gets the date value in the following format: Month/Day/Year*/

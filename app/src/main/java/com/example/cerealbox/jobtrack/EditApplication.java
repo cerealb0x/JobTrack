@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
@@ -21,6 +22,8 @@ public class EditApplication extends AppCompatActivity {
     private EditText companyField;
     private EditText positionField;
     private EditText dateField;
+    private CheckBox receivedInterviewBox;
+    private CheckBox receivedOfferBox;
     private String savedAID;
 
 
@@ -34,15 +37,22 @@ public class EditApplication extends AppCompatActivity {
         companyField = (EditText) findViewById(R.id.edit_company_field);
         positionField = (EditText) findViewById(R.id.edit_position_field);
         dateField = (EditText) findViewById(R.id.edit_dateField);
+        receivedInterviewBox = (CheckBox) findViewById(R.id.receivedInterviewCheckBox);
+        receivedOfferBox = (CheckBox) findViewById(R.id.receivedOfferCheckBox);
 
         String savedCompany = intent.getStringExtra(CheckAllApplications.SELECTED_COMPANY);
         String savedPosition = intent.getStringExtra(CheckAllApplications.SELECTED_POSITION);
         String savedDate = intent.getStringExtra(CheckAllApplications.SELECTED_DATE);
+        boolean savedInterviewStatus = intent.getIntExtra(CheckAllApplications.SELECTED_INTERVIEW_STATUS, 0) == 1 ? true:false;
+        boolean savedOfferStatus = intent.getIntExtra(CheckAllApplications.SELECTED_OFFER_STATUS, 0) == 1 ? true:false;
         savedAID = intent.getStringExtra(CheckAllApplications.SAVED_AID);
 
         companyField.setText(savedCompany);
         positionField.setText(savedPosition);
         dateField.setText(savedDate);
+        receivedInterviewBox.setChecked(savedInterviewStatus);
+        receivedOfferBox.setChecked(savedOfferStatus);
+
 
         dateField.setOnClickListener(new View.OnClickListener() {
 
@@ -113,7 +123,7 @@ public class EditApplication extends AppCompatActivity {
          Log.w("edit", dateField.getText().toString());
 
 
-        ds.editCompany(companyField.getText().toString(), positionField.getText().toString(), dateField.getText().toString(), savedAID);
+        ds.editCompany(companyField.getText().toString(), positionField.getText().toString(), dateField.getText().toString(), receivedInterviewBox.isChecked(), receivedOfferBox.isChecked(), savedAID);
 
         companyField.clearFocus();
         positionField.clearFocus();

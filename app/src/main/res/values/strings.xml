@@ -21,6 +21,10 @@
     <string name="title_activity_check_all_applications">Check All Applications</string>
     <string name="date_text">Date of Application: </string>
 
+    <!--Edit  Application Screen -->
+    <string name="received_interview">Received An Interview</string>
+    <string name="received_offer">Received An Offer</string>
+
 
 
     <string name="no_applications">You Have No Applications</string>
