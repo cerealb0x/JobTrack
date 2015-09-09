@@ -46,21 +46,23 @@ public class CheckAllApplications extends AppCompatActivity {
 
        // List<Applications> allApplications = ds.displayApplications();
 
+        /*Gather all applications for the selected month*/
         final List<Applications> allApplications = ds.displayApplicationsForMonth(month);
 
 
         applicationsList = (ListView) findViewById(R.id.applicationsListView);
         noApplicationsText = (TextView) findViewById(R.id.noApplicationsText);
 
-
+        /*Create adapter for ListView and set it to our applications list*/
         adapter = new ArrayAdapter<Applications>(this,
                 android.R.layout.simple_list_item_1, allApplications);
         applicationsList.setAdapter(adapter);
 
-
+        /*Set the OnItemClick Listener for our ListView cells*/
         applicationsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                /*on click, we send the following information to the EditApplication Activity*/
                 Intent intent = new Intent(CheckAllApplications.this, EditApplication.class);
                 intent.putExtra(SELECTED_COMPANY, allApplications.get(position).getCompany());
                 intent.putExtra(SELECTED_POSITION, allApplications.get(position).getPosition());
@@ -74,7 +76,7 @@ public class CheckAllApplications extends AppCompatActivity {
 
 
 
-
+        /*Set our empty application list text to invisible when we have applications to show*/
         if(!allApplications.isEmpty()) {
             noApplicationsText.setVisibility(View.GONE);
 

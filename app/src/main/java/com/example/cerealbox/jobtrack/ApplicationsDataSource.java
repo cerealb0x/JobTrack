@@ -32,6 +32,10 @@ public class ApplicationsDataSource {
     }
 
 
+    /* method to insert a new application into database
+    * Input: user-inputted company name, position description and application date
+    * Output: database row ID
+    * */
     public long insertCompany(String company, String position, String date){
 
         ContentValues values = new ContentValues();
@@ -42,6 +46,9 @@ public class ApplicationsDataSource {
         int year = Integer.parseInt(dateParts[2]);
         String aid = generateApplicationID();
 
+        /*Information about this application that will be saved:
+        * Company name, Position, Date separated into month, day and year, and a
+        * randomly generated Application ID */
         values.put(dbHelper.COMPANY, company);
         values.put(dbHelper.POSITION, position);
         values.put(dbHelper.MONTH, month + 1);
@@ -56,6 +63,7 @@ public class ApplicationsDataSource {
         return rowID;
     }
 
+    /*Method that modifies an existing database entry*/
     public long editCompany(String company, String position, String date, String saved_aid){
 
         ContentValues values = new ContentValues();
@@ -79,14 +87,18 @@ public class ApplicationsDataSource {
     }
 
 
+    /*Deletes all applications stored in the database*/
     public void deleteAll(){
         database.delete(MySQLiteHelper.TABLE_NAME, null, null);
     }
 
-
+    /*Deletes a specific application from the database
+    * Input: an application's application id
+    * Output: that application entry in the database is deleted*/
     public void deleteApplication(String aid){
         database.delete(MySQLiteHelper.TABLE_NAME, MySQLiteHelper.AID + " = '" + aid + "'", null);
     }
+
 
     public int parseDateFie(String date, int field){
         int index = 0;
@@ -112,6 +124,9 @@ public class ApplicationsDataSource {
         return value;
     }
 
+    /* Method to gather all applications stored in the database into a list
+    * Input: None
+    * Output: All saved applications, into a list*/
     public List<Applications> displayApplications(){
         String[] columns = {MySQLiteHelper.COMPANY, MySQLiteHelper.POSITION, MySQLiteHelper.MONTH, MySQLiteHelper.DAY, MySQLiteHelper.YEAR};
         List<Applications> applications = new ArrayList<Applications>();
@@ -139,6 +154,9 @@ public class ApplicationsDataSource {
 
     }
 
+    /* Method to gather all applications of a certain month stored in the database into a list
+    * Input: a month, in its integer value
+    * Output: All saved applications, into a list*/
     public List<Applications> displayApplicationsForMonth(int month){
         String[] columns = {MySQLiteHelper.COMPANY, MySQLiteHelper.POSITION, MySQLiteHelper.MONTH, MySQLiteHelper.DAY, MySQLiteHelper.YEAR, MySQLiteHelper.AID};
         List<Applications> applications = new ArrayList<Applications>();
@@ -170,7 +188,7 @@ public class ApplicationsDataSource {
 
     }
 
-
+    /*Generates a randomized application id for each application*/
     public String generateApplicationID(){
 
         String characters = "abcdefghijklmnopqarstuvqxyz1234567890";
