@@ -54,7 +54,7 @@
         android:text="@string/saveButton"
         android:id="@+id/saveButton"
         android:onClick="saveApplication"
-        android:layout_centerVertical="true"
+        android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/dateField"
         android:layout_alignEnd="@+id/dateField" />
 

@@ -37,16 +37,28 @@
             android:label="@string/title_activity_select_month"
             android:parentActivityName=".MainActivity" >
             <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.cerealbox.jobtrack.MainActivity" />
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
         </activity>
         <activity
             android:name=".EditApplication"
             android:label="@string/title_activity_edit_application"
-            android:parentActivityName=".CheckAllApplications">
+            android:parentActivityName=".CheckAllApplications" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.cerealbox.jobtrack.CheckAllApplications" />
+        </activity>
+        <activity
+            android:name=".SearchResultsActivity"
+            android:label="@string/title_activity_search_results"
+            android:parentActivityName=".SelectMonth" >
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+
         </activity>
     </application>
 

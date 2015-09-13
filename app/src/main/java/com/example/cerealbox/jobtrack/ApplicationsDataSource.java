@@ -51,7 +51,7 @@ public class ApplicationsDataSource {
         * randomly generated Application ID */
         values.put(dbHelper.COMPANY, company);
         values.put(dbHelper.POSITION, position);
-        values.put(dbHelper.MONTH, month + 1);
+        values.put(dbHelper.MONTH, month);
         values.put(dbHelper.DAY, day);
         values.put(dbHelper.YEAR, year);
         values.put(dbHelper.RECEIVED_INTERVIEW, dbHelper.FALSE);

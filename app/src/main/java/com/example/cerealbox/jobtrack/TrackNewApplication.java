@@ -47,7 +47,7 @@ public class TrackNewApplication extends AppCompatActivity {
                         // TODO Auto-generated method stub
                     /*      Your code   to get date and time    */
 
-                        String date = String.valueOf(selectedmonth)+"/"+String.valueOf(selectedday)+"/"+String.valueOf(selectedyear);
+                        String date = String.valueOf(selectedmonth+1)+"/"+String.valueOf(selectedday)+"/"+String.valueOf(selectedyear);
 
                         dateField.setText(date);
                     }
