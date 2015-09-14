@@ -162,6 +162,39 @@ public class ApplicationsDataSource {
 
     }
 
+    public List<Applications> displayApplicationsForSearch(String searchTerm){
+
+        String[] columns = {MySQLiteHelper.COMPANY, MySQLiteHelper.POSITION, MySQLiteHelper.MONTH, MySQLiteHelper.DAY, MySQLiteHelper.YEAR, MySQLiteHelper.RECEIVED_INTERVIEW, MySQLiteHelper.RECEIVED_OFFER, MySQLiteHelper.AID};
+        List<Applications> applications = new ArrayList<Applications>();
+        Cursor cursor = database.query(MySQLiteHelper.TABLE_NAME, columns, "Company LIKE '%"+searchTerm+
+                                                                            "' or Company LIKE '"+searchTerm+
+                                                                            "%' or Company LIKE '%"+searchTerm+"%'",
+                                                                            null, MySQLiteHelper.MONTH, null, MySQLiteHelper.COMPANY);
+
+
+        cursor.moveToFirst();
+
+        while(!cursor.isAfterLast()){
+            Applications application = new Applications();
+
+            application.setCompany(cursor.getString(0));
+            application.setPosition(cursor.getString(1));
+            application.setMonth(cursor.getInt(2));
+            application.setDay(cursor.getInt(3));
+            application.setYear(cursor.getInt(4));
+            application.setInterviewStatus(cursor.getInt(5));
+            application.setOfferStatus(cursor.getInt(6));
+            application.setAid(cursor.getString(7));
+
+            applications.add(application);
+            cursor.moveToNext();
+
+        }
+
+        cursor.close();
+        return applications;
+    }
+
     /* Method to gather all applications of a certain month stored in the database into a list
     * Input: a month, in its integer value
     * Output: All saved applications, into a list*/

@@ -7,8 +7,29 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import java.util.List;
 
 public class SearchResultsActivity extends AppCompatActivity {
+
+    private ApplicationsDataSource ds;
+    private ListView applicationsList;
+
+    private ArrayAdapter<Applications> adapter;
+
+
+    public final static String SELECTED_COMPANY = "com.mycompany.myfirstapp.SELECTED_COMPANY";
+    public final static String SELECTED_POSITION = "com.mycompany.myfirstapp.SELECTED_POSITION";
+    public final static String SELECTED_DATE = "com.mycompany.myfirstapp.SELECTED_DATE";
+    public final static String SELECTED_INTERVIEW_STATUS = "com.mycompany.myfirstapp.SELECTED_INTERVIEW_STATUS";
+    public final static String SELECTED_OFFER_STATUS = "com.mycompany.myfirstapp.SELECTED_OFFER_STATUS";
+    public final static String SAVED_AID = "com.mycompany.myfirstapp.SAVED_AID";
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +39,39 @@ public class SearchResultsActivity extends AppCompatActivity {
         Log.w("query", "going into activity");
 
 
-        handleIntent(getIntent());
+        ds = new ApplicationsDataSource(this);
+        ds.open();
+
+        String query = handleIntent(getIntent());
+
+        /*Gather all applications given the search term*/
+        final List<Applications> allApplications = ds.displayApplicationsForSearch(query);
+
+        applicationsList = (ListView) findViewById(R.id.searchListView);
+
+                /*Create adapter for ListView and set it to our applications list*/
+        adapter = new ArrayAdapter<Applications>(this,
+                android.R.layout.simple_list_item_1, allApplications);
+        applicationsList.setAdapter(adapter);
+
+        /*Set the OnItemClick Listener for our ListView cells*/
+        applicationsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                /*on click, we send the following information to the EditApplication Activity*/
+                Intent intent = new Intent(SearchResultsActivity.this, EditApplication.class);
+                intent.putExtra(SELECTED_COMPANY, allApplications.get(position).getCompany());
+                intent.putExtra(SELECTED_POSITION, allApplications.get(position).getPosition());
+                intent.putExtra(SELECTED_DATE, allApplications.get(position).getDateAsString());
+                intent.putExtra(SELECTED_INTERVIEW_STATUS, allApplications.get(position).getInterviewStatus());
+                intent.putExtra(SELECTED_OFFER_STATUS, allApplications.get(position).getOfferStatus());
+                intent.putExtra(SAVED_AID, allApplications.get(position).getAid());
+
+
+                startActivity(intent);
+            }
+        });
+
     }
 
     @Override
@@ -50,14 +103,15 @@ public class SearchResultsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void handleIntent(Intent intent) {
+    private String handleIntent(Intent intent) {
 
-
+        String query = "";
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
+            query = intent.getStringExtra(SearchManager.QUERY);
             //use the query to search your data somehow
             Log.w("query", query);
         }
+        return query;
     }
 
 
