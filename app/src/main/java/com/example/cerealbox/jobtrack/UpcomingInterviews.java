@@ -4,27 +4,22 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class CheckAllApplications extends AppCompatActivity {
+public class UpcomingInterviews extends AppCompatActivity {
 
     private ApplicationsDataSource ds;
-    private ListView applicationsList;
-    private TextView noApplicationsText;
-    private int month;
+    private ListView interviewsList;
+    private TextView noInterviewsText;
     private ArrayAdapter<Applications> adapter;
-
 
     public final static String SELECTED_COMPANY = "com.mycompany.myfirstapp.SELECTED_COMPANY";
     public final static String SELECTED_POSITION = "com.mycompany.myfirstapp.SELECTED_POSITION";
@@ -34,33 +29,30 @@ public class CheckAllApplications extends AppCompatActivity {
     public final static String SELECTED_INTERVIEW_DATE = "com.mycompany.myfirstapp.SELECTED_INTERVIEW_DATE";
     public final static String SAVED_AID = "com.mycompany.myfirstapp.SAVED_AID";
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_check_all_applications);
+        setContentView(R.layout.activity_upcoming_interviews);
 
         Intent intent = getIntent();
-        month = intent.getIntExtra(SelectMonth.SELECTED_MONTH, 0);
 
         ds = new ApplicationsDataSource(this);
         ds.open();
 
         /*Gather all applications for the selected month*/
-        final List<Applications> allApplications = ds.displayApplicationsForMonth(month);
+        final List<Applications> allApplications = ds.displayApplicationsWithUpcomingInterviews();//display applications with upcoming interviews
 
 
-        applicationsList = (ListView) findViewById(R.id.applicationsListView);
-        noApplicationsText = (TextView) findViewById(R.id.noApplicationsText);
+        interviewsList = (ListView) findViewById(R.id.interviewsListView);
+        noInterviewsText = (TextView) findViewById(R.id.noInterviewsText);
 
         /*Create adapter for ListView and set it to our applications list*/
         adapter = new ArrayAdapter<Applications>(this,
                 android.R.layout.simple_list_item_1, allApplications);
-        applicationsList.setAdapter(adapter);
+        interviewsList.setAdapter(adapter);
 
         /*Set the OnItemClick Listener for our ListView cells*/
-        applicationsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        interviewsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 /*on click, we send the following information to the EditApplication Activity*/
@@ -68,7 +60,7 @@ public class CheckAllApplications extends AppCompatActivity {
                 Log.w("interview date", "intent is created");
 
 
-                Intent intent = new Intent(CheckAllApplications.this, EditApplication.class);
+                Intent intent = new Intent(UpcomingInterviews.this, EditApplication.class);
                 intent.putExtra(SELECTED_COMPANY, allApplications.get(position).getCompany());
                 intent.putExtra(SELECTED_POSITION, allApplications.get(position).getPosition());
                 intent.putExtra(SELECTED_DATE, allApplications.get(position).getDateAsString());
@@ -86,16 +78,17 @@ public class CheckAllApplications extends AppCompatActivity {
 
         /*Set our empty application list text to invisible when we have applications to show*/
         if(!allApplications.isEmpty()) {
-            noApplicationsText.setVisibility(View.GONE);
+            noInterviewsText.setVisibility(View.GONE);
 
         }
+
 
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_check_all_applications, menu);
+        getMenuInflater().inflate(R.menu.menu_upcoming_interviews, menu);
         return true;
     }
 
@@ -118,22 +111,28 @@ public class CheckAllApplications extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+                /*Gather all applications for the selected month*/
+        final List<Applications> allApplications = ds.displayApplicationsWithUpcomingInterviews();//display applications with upcoming interviews
 
 
-        final List<Applications> allApplications = ds.displayApplicationsForMonth(month);
+        interviewsList = (ListView) findViewById(R.id.interviewsListView);
+        noInterviewsText = (TextView) findViewById(R.id.noInterviewsText);
 
-
+        /*Create adapter for ListView and set it to our applications list*/
         adapter = new ArrayAdapter<Applications>(this,
                 android.R.layout.simple_list_item_1, allApplications);
-        applicationsList.setAdapter(adapter);
+        interviewsList.setAdapter(adapter);
 
-
-                /*Set the OnItemClick Listener for our ListView cells*/
-        applicationsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*Set the OnItemClick Listener for our ListView cells*/
+        interviewsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 /*on click, we send the following information to the EditApplication Activity*/
-                Intent intent = new Intent(CheckAllApplications.this, EditApplication.class);
+
+                Log.w("interview date", "intent is created");
+
+
+                Intent intent = new Intent(UpcomingInterviews.this, EditApplication.class);
                 intent.putExtra(SELECTED_COMPANY, allApplications.get(position).getCompany());
                 intent.putExtra(SELECTED_POSITION, allApplications.get(position).getPosition());
                 intent.putExtra(SELECTED_DATE, allApplications.get(position).getDateAsString());
@@ -147,12 +146,14 @@ public class CheckAllApplications extends AppCompatActivity {
             }
         });
 
+
+
+        /*Set our empty application list text to invisible when we have applications to show*/
         if(!allApplications.isEmpty()) {
-            noApplicationsText.setVisibility(View.GONE);
+            noInterviewsText.setVisibility(View.GONE);
 
         }else{
-            noApplicationsText.setVisibility(View.VISIBLE);
-
+            noInterviewsText.setVisibility(View.VISIBLE);
         }
 
     }

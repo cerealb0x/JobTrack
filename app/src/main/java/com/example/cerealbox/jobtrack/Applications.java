@@ -131,7 +131,15 @@ public class Applications {
     /*This class' toString method, which decides how its info is presented when toString is called*/
     @Override
     public String toString(){
-        return "Company: " + company + "    Position: " + position + "   Applied: " + month + "/" + day + "/" + year;
+
+        String interviewInfo;
+        if(interviewStatus == 1){
+            interviewInfo = "Interview At " + interviewMonth + "/" + interviewDay + "/" + interviewYear;
+        }else{
+            interviewInfo = "No Interview Scheduled";
+        }
+
+        return "Company: " + company + "    Position: " + position + "   Applied: " + month + "/" + day + "/" + year + "    "  + interviewInfo;
     }
 
 

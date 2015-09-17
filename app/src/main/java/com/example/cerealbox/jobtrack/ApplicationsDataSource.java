@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
@@ -171,6 +172,54 @@ public class ApplicationsDataSource {
         return applications;
 
     }
+
+
+    public List<Applications> displayApplicationsWithUpcomingInterviews(){
+
+        String[] columns = {MySQLiteHelper.COMPANY, MySQLiteHelper.POSITION, MySQLiteHelper.MONTH, MySQLiteHelper.DAY, MySQLiteHelper.YEAR, MySQLiteHelper.RECEIVED_INTERVIEW, MySQLiteHelper.RECEIVED_OFFER,MySQLiteHelper.INTERVIEW_MONTH, MySQLiteHelper.INTERVIEW_DAY, MySQLiteHelper.INTERVIEW_YEAR, MySQLiteHelper.AID};
+        List<Applications> applications = new ArrayList<Applications>();
+        Calendar mcurrentDate = Calendar.getInstance();
+        int mYear = mcurrentDate.get(Calendar.YEAR);
+        int mMonth = mcurrentDate.get(Calendar.MONTH)+1;
+        int mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
+
+
+
+
+        Cursor cursor = database.query(MySQLiteHelper.TABLE_NAME, columns, MySQLiteHelper.RECEIVED_INTERVIEW + " IS " + MySQLiteHelper.TRUE
+                                        + " AND " + MySQLiteHelper.INTERVIEW_MONTH + " >= " + mMonth + " AND " + MySQLiteHelper.INTERVIEW_DAY + " >= " +
+                                         mDay + " AND " + MySQLiteHelper.INTERVIEW_YEAR + " IS " + mYear,
+                null, null, null, MySQLiteHelper.INTERVIEW_MONTH + "," + MySQLiteHelper.INTERVIEW_DAY);
+
+
+
+        cursor.moveToFirst();
+
+        while(!cursor.isAfterLast()){
+            Applications application = new Applications();
+
+            application.setCompany(cursor.getString(0));
+            application.setPosition(cursor.getString(1));
+            application.setMonth(cursor.getInt(2));
+            application.setDay(cursor.getInt(3));
+            application.setYear(cursor.getInt(4));
+            application.setInterviewStatus(cursor.getInt(5));
+            application.setOfferStatus(cursor.getInt(6));
+            application.setInterviewMonth(cursor.getInt(7));
+            application.setInterviewDay(cursor.getInt(8));
+            application.setInterviewYear(cursor.getInt(9));
+            application.setAid(cursor.getString(10));
+
+            applications.add(application);
+            cursor.moveToNext();
+
+        }
+
+        cursor.close();
+        return applications;
+    }
+
+
 
     public List<Applications> displayApplicationsForSearch(String searchTerm){
 

@@ -64,5 +64,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void checkUpcomingInterviews(View view){
+
+        Intent intent = new Intent(this, UpcomingInterviews.class);
+        startActivity(intent);
+
+    }
+
 
 }

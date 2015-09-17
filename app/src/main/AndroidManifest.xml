@@ -55,10 +55,14 @@
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
+
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
-
+        </activity>
+        <activity
+            android:name=".UpcomingInterviews"
+            android:label="@string/title_activity_upcoming_interviews" >
         </activity>
     </application>
 

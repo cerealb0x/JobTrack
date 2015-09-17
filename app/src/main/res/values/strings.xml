@@ -9,6 +9,7 @@
     <string name= "check_applications">Check Applications</string>
     <string name= "track_application">Track New Application</string>
     <string name= "delete_all_applications">Delete All Applications</string>
+    <string name= "check_upcoming_interviews">Check Upcoming Interviews</string>
 
 
     <string name="action_settings">Settings</string>
@@ -31,7 +32,11 @@
 
     <string name="no_applications">You Have No Applications</string>
     <string name="title_activity_select_month">Select Month</string>
-    <string name="title_activity_edit_application">EditApplication</string>
-    <string name="title_activity_search_results">SearchResultsActivity</string>
+    <string name="title_activity_edit_application">Edit Application</string>
+    <string name="title_activity_search_results">Search Results</string>
+    <string name="title_activity_upcoming_interviews">Upcoming Interviews</string>
+
+    <string name="no_interviews">You Have No Upcoming Interviews</string>
+
 
 </resources>

@@ -46,9 +46,18 @@
 
         android:onClick="deleteAllApplications"
 
-        android:layout_below="@+id/button2"
-        android:layout_alignParentLeft="true" />
+        android:layout_below="@+id/upcomingInterviewsButton"
+        android:layout_centerHorizontal="true" />
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/check_upcoming_interviews"
+        android:id="@+id/upcomingInterviewsButton"
+        android:onClick="checkUpcomingInterviews"
+        android:layout_below="@+id/button2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 
 </RelativeLayout>
