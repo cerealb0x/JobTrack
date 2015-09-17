@@ -10,7 +10,7 @@ import android.util.Log;
  */
 public class MySQLiteHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 6;
     public static final String TABLE_NAME = "applications";
     public static final String COMPANY = "Company";
     public static final String POSITION = "Position";
@@ -19,6 +19,9 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String YEAR = "Year";
     public static final String RECEIVED_INTERVIEW = "Interview";
     public static final String RECEIVED_OFFER = "Offer";
+    public static final String INTERVIEW_DAY = "Interview_Day";
+    public static final String INTERVIEW_MONTH = "Interview_Month";
+    public static final String INTERVIEW_YEAR = "Interview_Year";
     public static final String AID = "AID";
 
     public static final int TRUE = 1;
@@ -34,6 +37,9 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
                                                     + YEAR + " INT, "
                                                     + RECEIVED_INTERVIEW + " INT, "
                                                     + RECEIVED_OFFER + " INT, "
+                                                    + INTERVIEW_MONTH + " INT, "
+                                                    + INTERVIEW_DAY + " INT, "
+                                                    + INTERVIEW_YEAR + " INT, "
                                                     + AID +" TEXT);";
 
 

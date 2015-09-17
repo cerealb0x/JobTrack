@@ -22,6 +22,7 @@ public class EditApplication extends AppCompatActivity {
     private EditText companyField;
     private EditText positionField;
     private EditText dateField;
+    private EditText interviewDateField;
     private CheckBox receivedInterviewBox;
     private CheckBox receivedOfferBox;
     private String savedAID;
@@ -37,12 +38,14 @@ public class EditApplication extends AppCompatActivity {
         companyField = (EditText) findViewById(R.id.edit_company_field);
         positionField = (EditText) findViewById(R.id.edit_position_field);
         dateField = (EditText) findViewById(R.id.edit_dateField);
+        interviewDateField = (EditText) findViewById(R.id.edit_interviewDateField);
         receivedInterviewBox = (CheckBox) findViewById(R.id.receivedInterviewCheckBox);
         receivedOfferBox = (CheckBox) findViewById(R.id.receivedOfferCheckBox);
 
         String savedCompany = intent.getStringExtra(CheckAllApplications.SELECTED_COMPANY);
         String savedPosition = intent.getStringExtra(CheckAllApplications.SELECTED_POSITION);
         String savedDate = intent.getStringExtra(CheckAllApplications.SELECTED_DATE);
+        String savedInterviewDate = intent.getStringExtra(CheckAllApplications.SELECTED_INTERVIEW_DATE);
         boolean savedInterviewStatus = intent.getIntExtra(CheckAllApplications.SELECTED_INTERVIEW_STATUS, 0) == 1 ? true:false;
         boolean savedOfferStatus = intent.getIntExtra(CheckAllApplications.SELECTED_OFFER_STATUS, 0) == 1 ? true:false;
         savedAID = intent.getStringExtra(CheckAllApplications.SAVED_AID);
@@ -52,6 +55,14 @@ public class EditApplication extends AppCompatActivity {
         dateField.setText(savedDate);
         receivedInterviewBox.setChecked(savedInterviewStatus);
         receivedOfferBox.setChecked(savedOfferStatus);
+
+        if(!savedInterviewDate.equals("-1/-1/-1")) {
+            interviewDateField.setText(savedInterviewDate);
+            Log.w("interview date", "the saved interview date is " + savedInterviewDate);
+        }else{
+            interviewDateField.setText("");
+        }
+
 
 
         dateField.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +88,33 @@ public class EditApplication extends AppCompatActivity {
                     }
                 }, mYear, mMonth, mDay);
                 mDatePicker.setTitle("Select date of application");
+                mDatePicker.show();
+            }
+        });
+
+        interviewDateField.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                //To show current date in the datepicker
+                Calendar mcurrentDate = Calendar.getInstance();
+                int mYear = mcurrentDate.get(Calendar.YEAR);
+                int mMonth = mcurrentDate.get(Calendar.MONTH);
+                int mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog mDatePicker = new DatePickerDialog(EditApplication.
+                        this, new DatePickerDialog.OnDateSetListener() {
+                    public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
+                        // TODO Auto-generated method stub
+                    /*      Your code   to get date and time    */
+
+                        String date = String.valueOf(selectedmonth + 1) + "/" + String.valueOf(selectedday) + "/" + String.valueOf(selectedyear);
+
+                        interviewDateField.setText(date);
+                    }
+                }, mYear, mMonth, mDay);
+                mDatePicker.setTitle("Set Interview Date");
                 mDatePicker.show();
             }
         });
@@ -123,7 +161,14 @@ public class EditApplication extends AppCompatActivity {
          Log.w("edit", dateField.getText().toString());
 
 
-        ds.editCompany(companyField.getText().toString(), positionField.getText().toString(), dateField.getText().toString(), receivedInterviewBox.isChecked(), receivedOfferBox.isChecked(), savedAID);
+        String interviewDate;
+        if(interviewDateField.getText().length() != 0 && receivedInterviewBox.isChecked()){
+            interviewDate = interviewDateField.getText().toString();
+        }else{
+            interviewDate = "-1/-1/-1";
+        }
+
+        ds.editCompany(companyField.getText().toString(), positionField.getText().toString(), dateField.getText().toString(), receivedInterviewBox.isChecked(), receivedOfferBox.isChecked(), interviewDate, savedAID);
 
         companyField.clearFocus();
         positionField.clearFocus();

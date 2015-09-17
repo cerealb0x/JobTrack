@@ -22,7 +22,7 @@ public class SelectMonth extends AppCompatActivity {
     private ListView monthsList;
 
     private String[] monthsArray = {"January", "February", "March", "April", "May", "June",
-                                "July", "August", "Septmeber", "October", "November", "December"};
+                                "July", "August", "September", "October", "November", "December"};
 
 
     public final static String SELECTED_MONTH = "com.mycompany.myfirstapp.SELECTED_MONTH";

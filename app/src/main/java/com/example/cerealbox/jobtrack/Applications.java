@@ -12,6 +12,9 @@ public class Applications {
     private int year;
     private int interviewStatus;
     private int offerStatus;
+    private int interviewMonth;
+    private int interviewDay;
+    private int interviewYear;
     private String aid;
 
     /*Getter method for position variable*/
@@ -91,9 +94,38 @@ public class Applications {
         this.offerStatus = offerStatus;
     }
 
+    public int getInterviewMonth() {
+        return interviewMonth;
+    }
+
+    public void setInterviewMonth(int interviewMonth) {
+        this.interviewMonth = interviewMonth;
+    }
+
+    public int getInterviewDay() {
+        return interviewDay;
+    }
+
+    public void setInterviewDay(int interviewDay) {
+        this.interviewDay = interviewDay;
+    }
+
+    public int getInterviewYear() {
+        return interviewYear;
+    }
+
+    public void setInterviewYear(int interviewYear) {
+        this.interviewYear = interviewYear;
+    }
+
     /*Gets the date value in the following format: Month/Day/Year*/
     public String getDateAsString(){
         return String.valueOf(month)+ "/" + String.valueOf(day) + "/" + String.valueOf(year);
+    }
+
+    /*Gets the interview date value in the following format: Month/Day/Year*/
+    public String getInterviewDateAsString(){
+        return String.valueOf(interviewMonth)+ "/" + String.valueOf(interviewDay) + "/" + String.valueOf(interviewYear);
     }
 
     /*This class' toString method, which decides how its info is presented when toString is called*/

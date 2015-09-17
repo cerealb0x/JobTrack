@@ -31,6 +31,7 @@ public class CheckAllApplications extends AppCompatActivity {
     public final static String SELECTED_DATE = "com.mycompany.myfirstapp.SELECTED_DATE";
     public final static String SELECTED_INTERVIEW_STATUS = "com.mycompany.myfirstapp.SELECTED_INTERVIEW_STATUS";
     public final static String SELECTED_OFFER_STATUS = "com.mycompany.myfirstapp.SELECTED_OFFER_STATUS";
+    public final static String SELECTED_INTERVIEW_DATE = "com.mycompany.myfirstapp.SELECTED_INTERVIEW_DATE";
     public final static String SAVED_AID = "com.mycompany.myfirstapp.SAVED_AID";
 
 
@@ -65,12 +66,17 @@ public class CheckAllApplications extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 /*on click, we send the following information to the EditApplication Activity*/
+
+                Log.w("interview date", "intent is created");
+
+
                 Intent intent = new Intent(CheckAllApplications.this, EditApplication.class);
                 intent.putExtra(SELECTED_COMPANY, allApplications.get(position).getCompany());
                 intent.putExtra(SELECTED_POSITION, allApplications.get(position).getPosition());
                 intent.putExtra(SELECTED_DATE, allApplications.get(position).getDateAsString());
                 intent.putExtra(SELECTED_INTERVIEW_STATUS, allApplications.get(position).getInterviewStatus());
                 intent.putExtra(SELECTED_OFFER_STATUS, allApplications.get(position).getOfferStatus());
+                intent.putExtra(SELECTED_INTERVIEW_DATE, allApplications.get(position).getInterviewDateAsString());
                 intent.putExtra(SAVED_AID, allApplications.get(position).getAid());
 
 
@@ -135,6 +141,7 @@ public class CheckAllApplications extends AppCompatActivity {
                 intent.putExtra(SELECTED_DATE, allApplications.get(position).getDateAsString());
                 intent.putExtra(SELECTED_INTERVIEW_STATUS, allApplications.get(position).getInterviewStatus());
                 intent.putExtra(SELECTED_OFFER_STATUS, allApplications.get(position).getOfferStatus());
+                intent.putExtra(SELECTED_INTERVIEW_DATE, allApplications.get(position).getInterviewDateAsString());
                 intent.putExtra(SAVED_AID, allApplications.get(position).getAid());
 
 

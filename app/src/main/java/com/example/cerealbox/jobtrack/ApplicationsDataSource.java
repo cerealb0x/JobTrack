@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +57,9 @@ public class ApplicationsDataSource {
         values.put(dbHelper.YEAR, year);
         values.put(dbHelper.RECEIVED_INTERVIEW, dbHelper.FALSE);
         values.put(dbHelper.RECEIVED_OFFER, dbHelper.FALSE);
+        values.put(dbHelper.INTERVIEW_MONTH, -1);
+        values.put(dbHelper.INTERVIEW_DAY, -1);
+        values.put(dbHelper.INTERVIEW_YEAR, -1);
         values.put(dbHelper.AID, aid);
 
 
@@ -66,15 +70,19 @@ public class ApplicationsDataSource {
     }
 
     /*Method that modifies an existing database entry*/
-    public long editCompany(String company, String position, String date, boolean interviewStatus, boolean offerStatus, String saved_aid){
+    public long editCompany(String company, String position, String date, boolean interviewStatus, boolean offerStatus, String interviewDate, String saved_aid){
 
+        Log.w("interview date", "the interview being saved is "+interviewDate);
         ContentValues values = new ContentValues();
         String[] dateParts = date.split("/");
+        String[] interviewDateParts = interviewDate.split("/");
 
         int month = Integer.parseInt(dateParts[0]);
         int day = Integer.parseInt(dateParts[1]);
         int year = Integer.parseInt(dateParts[2]);
-
+        int interviewMonth = Integer.parseInt(interviewDateParts[0]);
+        int interviewDay = Integer.parseInt(interviewDateParts[1]);
+        int interviewYear = Integer.parseInt(interviewDateParts[2]);
         int interviewStatusAsInt = interviewStatus ? dbHelper.TRUE : dbHelper.FALSE;
         int offerStatusAsInt = offerStatus ? dbHelper.TRUE : dbHelper.FALSE;
 
@@ -86,7 +94,9 @@ public class ApplicationsDataSource {
         values.put(dbHelper.YEAR, year);
         values.put(dbHelper.RECEIVED_INTERVIEW, interviewStatusAsInt);
         values.put(dbHelper.RECEIVED_OFFER, offerStatusAsInt);
-
+        values.put(dbHelper.INTERVIEW_MONTH, interviewMonth);
+        values.put(dbHelper.INTERVIEW_DAY, interviewDay);
+        values.put(dbHelper.INTERVIEW_YEAR, interviewYear);
 
 
         long rowID = database.update(dbHelper.TABLE_NAME, values, dbHelper.AID + " = '" + saved_aid + "'", null);
@@ -164,7 +174,7 @@ public class ApplicationsDataSource {
 
     public List<Applications> displayApplicationsForSearch(String searchTerm){
 
-        String[] columns = {MySQLiteHelper.COMPANY, MySQLiteHelper.POSITION, MySQLiteHelper.MONTH, MySQLiteHelper.DAY, MySQLiteHelper.YEAR, MySQLiteHelper.RECEIVED_INTERVIEW, MySQLiteHelper.RECEIVED_OFFER, MySQLiteHelper.AID};
+        String[] columns = {MySQLiteHelper.COMPANY, MySQLiteHelper.POSITION, MySQLiteHelper.MONTH, MySQLiteHelper.DAY, MySQLiteHelper.YEAR, MySQLiteHelper.RECEIVED_INTERVIEW, MySQLiteHelper.RECEIVED_OFFER,MySQLiteHelper.INTERVIEW_MONTH, MySQLiteHelper.INTERVIEW_DAY, MySQLiteHelper.INTERVIEW_YEAR, MySQLiteHelper.AID};
         List<Applications> applications = new ArrayList<Applications>();
         Cursor cursor = database.query(MySQLiteHelper.TABLE_NAME, columns, "Company LIKE '%"+searchTerm+
                                                                             "' or Company LIKE '"+searchTerm+
@@ -184,7 +194,10 @@ public class ApplicationsDataSource {
             application.setYear(cursor.getInt(4));
             application.setInterviewStatus(cursor.getInt(5));
             application.setOfferStatus(cursor.getInt(6));
-            application.setAid(cursor.getString(7));
+            application.setInterviewMonth(cursor.getInt(7));
+            application.setInterviewDay(cursor.getInt(8));
+            application.setInterviewYear(cursor.getInt(9));
+            application.setAid(cursor.getString(10));
 
             applications.add(application);
             cursor.moveToNext();
@@ -199,13 +212,15 @@ public class ApplicationsDataSource {
     * Input: a month, in its integer value
     * Output: All saved applications, into a list*/
     public List<Applications> displayApplicationsForMonth(int month){
-        String[] columns = {MySQLiteHelper.COMPANY, MySQLiteHelper.POSITION, MySQLiteHelper.MONTH, MySQLiteHelper.DAY, MySQLiteHelper.YEAR, MySQLiteHelper.RECEIVED_INTERVIEW, MySQLiteHelper.RECEIVED_OFFER, MySQLiteHelper.AID};
+        String[] columns = {MySQLiteHelper.COMPANY, MySQLiteHelper.POSITION, MySQLiteHelper.MONTH, MySQLiteHelper.DAY, MySQLiteHelper.YEAR, MySQLiteHelper.RECEIVED_INTERVIEW, MySQLiteHelper.RECEIVED_OFFER, MySQLiteHelper.INTERVIEW_MONTH, MySQLiteHelper.INTERVIEW_DAY, MySQLiteHelper.INTERVIEW_YEAR, MySQLiteHelper.AID};
         List<Applications> applications = new ArrayList<Applications>();
         Cursor cursor = database.query(MySQLiteHelper.TABLE_NAME, columns, "Month is " + String.valueOf(month), null, null, null, MySQLiteHelper.DAY);
 
         // Cursor cursor = database.query(MySQLiteHelper.TABLE_NAME, columns, null, null, null, null, null);
 
         cursor.moveToFirst();
+
+
 
         while(!cursor.isAfterLast()){
             Applications application = new Applications();
@@ -217,8 +232,10 @@ public class ApplicationsDataSource {
             application.setYear(cursor.getInt(4));
             application.setInterviewStatus(cursor.getInt(5));
             application.setOfferStatus(cursor.getInt(6));
-            application.setAid(cursor.getString(7));
-
+            application.setInterviewMonth(cursor.getInt(7));
+            application.setInterviewDay(cursor.getInt(8));
+            application.setInterviewYear(cursor.getInt(9));
+            application.setAid(cursor.getString(10));
 
 
             applications.add(application);
