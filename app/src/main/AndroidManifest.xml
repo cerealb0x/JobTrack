@@ -19,6 +19,7 @@
         <activity
             android:name=".TrackNewApplication"
             android:label="@string/title_activity_track_new_application"
+            android:screenOrientation="portrait"
              >
 
         </activity>
@@ -39,6 +40,7 @@
         <activity
             android:name=".EditApplication"
             android:label="@string/title_activity_edit_application"
+            android:screenOrientation="portrait"
              >
 
         </activity>

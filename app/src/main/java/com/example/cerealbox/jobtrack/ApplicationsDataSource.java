@@ -58,9 +58,9 @@ public class ApplicationsDataSource {
         values.put(dbHelper.YEAR, year);
         values.put(dbHelper.RECEIVED_INTERVIEW, dbHelper.FALSE);
         values.put(dbHelper.RECEIVED_OFFER, dbHelper.FALSE);
-        values.put(dbHelper.INTERVIEW_MONTH, -1);
-        values.put(dbHelper.INTERVIEW_DAY, -1);
-        values.put(dbHelper.INTERVIEW_YEAR, -1);
+        values.put(dbHelper.INTERVIEW_MONTH, 15);
+        values.put(dbHelper.INTERVIEW_DAY, 35);
+        values.put(dbHelper.INTERVIEW_YEAR, year);
         values.put(dbHelper.AID, aid);
 
 

@@ -35,6 +35,11 @@ public class EditApplication extends AppCompatActivity {
         Intent intent = getIntent();
 
 
+        //To show current date in the datepicker
+        Calendar mcurrentDate = Calendar.getInstance();
+        int mYear = mcurrentDate.get(Calendar.YEAR);
+
+
         companyField = (EditText) findViewById(R.id.edit_company_field);
         positionField = (EditText) findViewById(R.id.edit_position_field);
         dateField = (EditText) findViewById(R.id.edit_dateField);
@@ -56,7 +61,7 @@ public class EditApplication extends AppCompatActivity {
         receivedInterviewBox.setChecked(savedInterviewStatus);
         receivedOfferBox.setChecked(savedOfferStatus);
 
-        if(!savedInterviewDate.equals("-1/-1/-1")) {
+        if(!savedInterviewDate.equals(15+"/"+35+"/"+mYear)) {
             interviewDateField.setText(savedInterviewDate);
             Log.w("interview date", "the saved interview date is " + savedInterviewDate);
         }else{
@@ -70,6 +75,7 @@ public class EditApplication extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
+
                 //To show current date in the datepicker
                 Calendar mcurrentDate = Calendar.getInstance();
                 int mYear = mcurrentDate.get(Calendar.YEAR);
@@ -149,6 +155,10 @@ public class EditApplication extends AppCompatActivity {
     }
 
     public void editApplication(View view){
+
+        Calendar mcurrentDate = Calendar.getInstance();
+        int mYear = mcurrentDate.get(Calendar.YEAR);
+
         if(companyField.getText().toString().isEmpty() || dateField.getText().toString().isEmpty()){
             alertUserOfNullFields();
             return;
@@ -165,7 +175,7 @@ public class EditApplication extends AppCompatActivity {
         if(interviewDateField.getText().length() != 0 && receivedInterviewBox.isChecked()){
             interviewDate = interviewDateField.getText().toString();
         }else{
-            interviewDate = "-1/-1/-1";
+            interviewDate = "15/35/"+mYear;
         }
 
         ds.editCompany(companyField.getText().toString(), positionField.getText().toString(), dateField.getText().toString(), receivedInterviewBox.isChecked(), receivedOfferBox.isChecked(), interviewDate, savedAID);

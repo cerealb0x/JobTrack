@@ -134,7 +134,11 @@ public class Applications {
 
         String interviewInfo;
         if(interviewStatus == 1){
-            interviewInfo = "Interview At " + interviewMonth + "/" + interviewDay + "/" + interviewYear;
+            if(interviewMonth != 15) {
+                interviewInfo = "Interview At " + interviewMonth + "/" + interviewDay + "/" + interviewYear;
+            }else{
+                interviewInfo = "Interview Date Not Recorded";
+            }
         }else{
             interviewInfo = "No Interview Scheduled";
         }
